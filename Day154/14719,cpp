@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int arr[504];
+int w,h, mx,mx_w, ret;
+int main(){
+	cin>>h>>w;
+	
+	for(int i=0; i<w; i++){
+		cin>>arr[i];
+		if(mx<=arr[i]){
+			mx_w=i;
+			mx=arr[i];
+		}
+	}
+	
+	
+	//왼쪽
+	int cur_h=arr[0];
+	int cur=0;
+	int cnt=0;
+	
+	for(int i=1; i<=mx_w; i++){
+		if(cur_h<=arr[i]){
+			int mn=min(cur_h,arr[i]);
+			ret+=((i-cur-1)*mn)-cnt;
+			cur=i;
+			cur_h=arr[i];
+			cnt=0;
+		}else{
+			cnt+=arr[i];
+		}
+	} 
+	
+	cur_h=arr[w-1];
+	cur=w-1;
+	cnt=0;
+	
+	for(int i=w-2; i>=mx_w; i--){
+		if(cur_h<=arr[i]){
+			int mn=min(cur_h,arr[i]);
+			ret+=((cur-i-1)*mn)-cnt;
+			cur=i;
+			cur_h=arr[i];
+			cnt=0;
+		}else{
+			cnt+=arr[i];
+		}
+	} 
+	
+	cout<<ret;
+	return 0;
+}
